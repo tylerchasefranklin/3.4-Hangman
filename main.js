@@ -31,7 +31,21 @@ var showGuesses = document.getElementById('guesses');
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+// not finished: this is designed to use the keyboard itself as the input for the letters
+document.addEventListener('keydown', function(event){
+  console.log('You pressed:', String.fromCharCode(event.keyCode));
+});
 
+
+// not finished: for creating buttons
+//var buttons = forEach(function(letter){
+  //var letterButtons = document.createElement('ul');
+  //letters.className = letter;
+  //var letterBox = document.getElementById('buttons');
+  //var letters = document.createElement('li');
+  // letters.textContent =
+
+//});
 
 
 

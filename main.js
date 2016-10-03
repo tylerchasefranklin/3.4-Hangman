@@ -1,6 +1,50 @@
 (function(){
   "use strict";
 
+var alphabet ;
+var guess ;
+var totalGuesses ;
+var guessesLeft ;
+var lettersGuessed ;
+var lettersMatched ;
+var output ;
+var letters ;
+var messages ;
+var numLettersMatched;
+var currentWord ;
+var guessInput ;
+
+function setupGame() {
+  alphabet = "abcdefghijklmnopqrstuvwxyz";
+  totalGuesses = 8;
+  messages = {
+    win: 'You Win!',
+    lose: 'Game Over',
+    guessed: 'Game Over',
+    validLetter: 'Please use a character from A-Z'
+    };
+    lettersGuessed = lettersMatched = '';
+    numLettersMatched = 0;
+    currentWord = spanCreator;
+    guessesLeft = document.getElementById('guesses-left');
+    guessInput = document.addEventListener('keydown', function(event){
+      console.log('You pressed:', String.fromCharCode(event.keyCode));
+    });
+    guessesLeft.innerHTML = 'You have ' + totalGuesses + ' guesses left';
+  }
+
+function endGame (win) {
+  if (win) {
+    output.innerHTML = messages.win;
+    output.classList.add('win');
+  } else {
+    ouput.innerHTML = messages.lose;
+    output.classList.add('error');
+  }
+}
+
+document.getElementById("start").onclick = setupGame();
+
 var wordNarrow = commonWords.filter(function(word){
   return word.length > 2;
 });
@@ -27,14 +71,8 @@ var guessWord = document.getElementById('word-container');
 guessWord.appendChild(newSpan);
 });
 
-var showGuesses = document.getElementById('guesses');
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-// not finished: this is designed to use the keyboard itself as the input for the letters
-document.addEventListener('keydown', function(event){
-  console.log('You pressed:', String.fromCharCode(event.keyCode));
-});
+
 
 
 // not finished: for creating buttons
@@ -46,6 +84,10 @@ document.addEventListener('keydown', function(event){
   // letters.textContent =
 
 //});
+
+
+
+
 
 
 

@@ -18,3 +18,8 @@ span {
   border-bottom: 3px solid black;
   color: black;
 }
+
+.lives {
+  font-size: 30px;
+  text-align: center;
+}

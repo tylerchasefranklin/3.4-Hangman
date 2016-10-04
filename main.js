@@ -2,74 +2,98 @@
   "use strict";
 
 var alphabet ;
-var guess ;
 var totalGuesses ;
 var guessesLeft ;
 var lettersGuessed ;
 var lettersMatched ;
-var output ;
 var letters ;
 var messages ;
 var numLettersMatched;
 var currentWord ;
 var guessInput ;
+var spanCreator ;
 
 function setupGame() {
+  console.log('ay yo');
+  $('.word-container').html('');
   alphabet = "abcdefghijklmnopqrstuvwxyz";
   totalGuesses = 8;
   messages = {
     win: 'You Win!',
-    lose: 'Game Over',
-    guessed: 'Game Over',
+    lose: 'Game Over!',
     validLetter: 'Please use a character from A-Z'
     };
-    lettersGuessed = lettersMatched = '';
-    numLettersMatched = 0;
     currentWord = spanCreator;
     guessesLeft = document.getElementById('guesses-left');
     guessInput = document.addEventListener('keydown', function(event){
       console.log('You pressed:', String.fromCharCode(event.keyCode));
+      guess(String.fromCharCode(event.keyCode).toLowerCase());
     });
     guessesLeft.innerHTML = 'You have ' + totalGuesses + ' guesses left';
+    var wordNarrow = commonWords.filter(function(word){
+      return word.length > 2;
+    });
+
+    function generateRandomWord(array){
+      var randomWord = array[Math.floor(Math.random() * wordNarrow.length)];
+      return randomWord;
+    }
+
+    var splitWord = function(){
+      var randomWord = generateRandomWord(wordNarrow);
+      var randomWordArray = randomWord.split("");
+      return randomWordArray;
+    };
+
+    spanCreator = splitWord();
+    console.log(spanCreator);
+
+    spanCreator.forEach(function(letter){
+    var newSpan = document.createElement('span');
+    newSpan.textContent = letter;
+    newSpan.className = letter + 'word';
+    var guessWord = document.getElementById('word-container');
+    guessWord.appendChild(newSpan);
+    });
   }
+
+function guess(letter){
+  var thisGuess = false;
+  var checkWin = true;
+  for(var i = 0; i < spanCreator.length; i++){
+    if(spanCreator[i] === letter){
+      thisGuess = true;
+      $($('.word-container span')[i]).addClass('active');
+    }
+  }
+  if (!thisGuess) {
+    totalGuesses--;
+    guessesLeft.innerHTML = 'You have ' + totalGuesses + ' guesses left';
+  } if (totalGuesses < 1){
+    endGame(false);
+  } for(var j = 0; j < spanCreator.length; j++){
+    if (!$($('.word-container span')[j]).hasClass('active')){
+      checkWin = false;
+    }
+  } if (checkWin){
+    endGame(true);
+  }
+}
 
 function endGame (win) {
   if (win) {
-    output.innerHTML = messages.win;
-    output.classList.add('win');
+    $('.endmessage').html(messages.win);
   } else {
-    ouput.innerHTML = messages.lose;
-    output.classList.add('error');
+    $('.endmessage').html(messages.lose);
   }
 }
 
-document.getElementById("start").onclick = setupGame();
-
-var wordNarrow = commonWords.filter(function(word){
-  return word.length > 2;
+setupGame();
+$('.reset').on('click', function(){
+  setupGame();
 });
 
-function generateRandomWord(array){
-  var randomWord = array[Math.floor(Math.random() * wordNarrow.length)];
-  return randomWord;
-}
 
-var splitWord = function(){
-  var randomWord = generateRandomWord(wordNarrow);
-  var randomWordArray = randomWord.split("");
-  return randomWordArray;
-};
-
-var spanCreator = splitWord();
-console.log(spanCreator);
-
-spanCreator.forEach(function(letter){
-var newSpan = document.createElement('span');
-//newSpan.textContent = letter;
-newSpan.className = letter + 'word';
-var guessWord = document.getElementById('word-container');
-guessWord.appendChild(newSpan);
-});
 
 
 

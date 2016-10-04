@@ -17,9 +17,14 @@ span {
   font-size: 60px;
   border-bottom: 3px solid black;
   color: black;
+  text-indent: -9999px;
 }
 
 .lives {
   font-size: 30px;
   text-align: center;
+}
+
+span.active {
+  text-indent: 0;
 }
